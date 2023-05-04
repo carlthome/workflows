@@ -1,9 +1,6 @@
 on:
   workflow_call:
 
-permissions:
-  contents: write
-
 jobs:
   test:
     runs-on: ubuntu-20.04
