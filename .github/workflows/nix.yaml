@@ -1,4 +1,8 @@
 on:
+  workflow_call:
+    secrets:
+      CACHIX_AUTH_TOKEN:
+        required: true
   push:
     branches:
       - main
@@ -51,4 +55,3 @@ jobs:
       - name: Export Nix store cache
         if: steps.nix-cache.outputs.cache-hit != 'true'
         run: nix copy --no-check-sigs --to /tmp/nix-cache ./#packages.x86_64-linux.default
-
