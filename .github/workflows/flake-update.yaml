@@ -19,5 +19,8 @@ jobs:
       - name: Update flake inputs
         run: nix flake update --commit-lock-file
 
+      - name: Check whether the flake evaluates and run its tests
+        run: nix flake check
+
       - name: Push updates
         run: git push
