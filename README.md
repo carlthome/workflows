@@ -4,7 +4,7 @@ Reusable GitHub Actions workflows
 ## Usage
 Add .github/workflows/test.yaml with 
 
-```
+```yaml
 on:
   push:
     branches:
