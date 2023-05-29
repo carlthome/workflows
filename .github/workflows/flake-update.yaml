@@ -14,7 +14,7 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
 
       - name: Install nix
-        uses: cachix/install-nix-action@v20
+        uses: cachix/install-nix-action@v21
 
       - name: Update flake inputs
         run: nix flake update --commit-lock-file
