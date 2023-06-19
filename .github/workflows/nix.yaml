@@ -18,7 +18,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('flake.lock') }}
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v21
+        uses: cachix/install-nix-action@v22
         with:
           install_url: https://releases.nixos.org/nix/nix-2.15.0/install
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
