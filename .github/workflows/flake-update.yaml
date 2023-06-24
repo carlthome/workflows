@@ -2,7 +2,7 @@ on:
   workflow_call:
 
 jobs:
-  test:
+  update:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout merge commit
