@@ -1,6 +1,6 @@
 { pkgs, ... }:
 pkgs.mkShell {
-  buildInputs = [ pkgs.actionlint ];
+  packages = [ pkgs.actionlint ];
   shellHook = ''
     actionlint --version
   '';
