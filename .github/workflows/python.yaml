@@ -6,7 +6,6 @@ on:
         type: string
 jobs:
   build:
-    name: Build ${{ inputs.package-name }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -30,7 +29,6 @@ jobs:
           path: ./dist/
 
   test:
-    name: Test ${{ inputs.package-name }}
     runs-on: ubuntu-latest
     needs: build
     steps:
