@@ -89,3 +89,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: ${{ matrix.repository-url }}
+          print-hash: true
