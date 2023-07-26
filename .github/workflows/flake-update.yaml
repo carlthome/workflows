@@ -20,7 +20,7 @@ jobs:
         run: nix flake update --commit-lock-file
 
       - name: Check whether the flake evaluates and run its tests
-        run: nix flake check
+        run: nix flake check --all-systems
 
       - name: Push updates
         run: git push
