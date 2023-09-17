@@ -4,8 +4,8 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/flake-checker-action@v5
       - uses: DeterminateSystems/nix-installer-action@v4
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: nix flake metadata
