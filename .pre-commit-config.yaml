@@ -2,4 +2,4 @@ repos:
   - repo: https://github.com/rhysd/actionlint
     rev: v1.6.25
     hooks:
-      - id: actionlint-system
+      - id: actionlint
