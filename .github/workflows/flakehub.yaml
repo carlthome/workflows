@@ -1,0 +1,21 @@
+on:
+  workflow_call:
+
+jobs:
+  publish:
+    runs-on: ubuntu-22.04
+    environment:
+      name: flakehub
+      url: https://flakehub.com/flake/${{ github.repository }}
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{github.ref }}
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/flakehub-push@main
+        with:
+          visibility: public
+          name: ${{ github.repository }}
+          tag: ${{ github.ref_name }}
