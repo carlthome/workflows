@@ -20,7 +20,7 @@ jobs:
         if: ${{ inputs.cachix-cache }}
         with:
           name: ${{ inputs.cachix-cache }}
-          signingKey: ${{ secrets.cachix-token }}
+          authToken: ${{ secrets.cachix-token }}
       - run: nix flake metadata
       - run: nix flake show
       - run: nix flake check --keep-going
