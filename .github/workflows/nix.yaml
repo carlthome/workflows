@@ -3,6 +3,7 @@ on:
     inputs:
       cachix-cache:
         type: string
+        default: ""
     secrets:
       cachix-token:
         required: false
@@ -16,7 +17,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v6
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - uses: cachix/cachix-action@v12
-        if: ${{ secrets.cachix-token }}
+        if: ${{ inputs.cachix-cache != "" }}
         with:
           name: ${{ inputs.cachix-cache }}
           signingKey: ${{ secrets.cachix-token }}
