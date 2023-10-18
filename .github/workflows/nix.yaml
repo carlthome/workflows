@@ -1,5 +1,11 @@
 on:
   workflow_call:
+    inputs:
+      cachix-cache:
+        type: string
+    secrets:
+      cachix-token:
+        required: false
 
 jobs:
   build:
@@ -9,6 +15,11 @@ jobs:
       - uses: DeterminateSystems/flake-checker-action@v5
       - uses: DeterminateSystems/nix-installer-action@v6
       - uses: DeterminateSystems/magic-nix-cache-action@main
+      - uses: cachix/cachix-action@v12
+        if: ${{ inputs.cachix-token }}
+        with:
+          name: ${{ inputs.cachix-cache }}
+          signingKey: ${{ secrets.cachix-token }}
       - run: nix flake metadata
       - run: nix flake show
       - run: nix flake check --keep-going
