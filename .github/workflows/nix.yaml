@@ -16,7 +16,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v6
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - uses: cachix/cachix-action@v12
-        if: ${{ inputs.cachix-token }}
+        if: ${{ secrets.cachix-token }}
         with:
           name: ${{ inputs.cachix-cache }}
           signingKey: ${{ secrets.cachix-token }}
