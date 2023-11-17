@@ -4,13 +4,16 @@ on:
       cachix-cache:
         type: string
         default: ""
+      runs-on:
+        type: string
+        default: ubuntu-22.04
     secrets:
       cachix-token:
         required: false
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ${{ inputs.runs-on }}
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/flake-checker-action@v5
