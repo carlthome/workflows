@@ -31,7 +31,7 @@ jobs:
           authToken: ${{ secrets.cachix-token }}
       - run: nix flake metadata
       - run: nix flake show
-      - if: $${{ inputs.update }}
+      - if: ${{ inputs.update }}
         run: nix flake update --commit-lock-file
       - run: nix flake check --keep-going --all-systems
       - run: nix build --print-build-logs
