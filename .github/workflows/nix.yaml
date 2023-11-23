@@ -7,6 +7,9 @@ on:
       runs-on:
         type: string
         default: ubuntu-22.04
+      update:
+        type: boolean
+        default: false
     secrets:
       cachix-token:
         required: false
@@ -16,6 +19,8 @@ jobs:
     runs-on: ${{ inputs.runs-on }}
     steps:
       - uses: actions/checkout@v4
+      - run: git config --global user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
+      - run: git config --global user.name "${GITHUB_ACTOR}"
       - uses: DeterminateSystems/flake-checker-action@v5
       - uses: DeterminateSystems/nix-installer-action@v8
       - uses: DeterminateSystems/magic-nix-cache-action@main
@@ -26,5 +31,8 @@ jobs:
           authToken: ${{ secrets.cachix-token }}
       - run: nix flake metadata
       - run: nix flake show
-      - run: nix flake check --keep-going
+      - if: $${{ inputs.update }}
+        run: nix flake update --commit-lock-file
+      - run: nix flake check --keep-going --all-systems
       - run: nix build --print-build-logs
+      - run: git push
