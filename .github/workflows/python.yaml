@@ -5,8 +5,10 @@ on:
         required: true
         type: string
       package-index-name:
+        default: PyPI
         type: string
       package-index-url:
+        default: https://pypi.org
         type: string
     secrets:
       password:
