@@ -8,6 +8,9 @@ on:
         type: string
       package-index-url:
         type: string
+    secrets:
+      password:
+        description: PyPI API token
 
 jobs:
   build:
@@ -80,3 +83,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: ${{ inputs.package-index-url }} 
+          password: ${{ secrets.password }}
