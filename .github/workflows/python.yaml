@@ -10,6 +10,9 @@ on:
       package-index-url:
         default: https://pypi.org
         type: string
+      package-index-upload-url:
+        default: https://upload.pypi.org/legacy/
+        type: string
     secrets:
       password:
         description: PyPI API token
@@ -84,5 +87,5 @@ jobs:
       - name: Publish ${{ inputs.package-name }} to ${{ inputs.package-index-name }}
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          repository-url: ${{ inputs.package-index-url }} 
+          repository-url: ${{ inputs.package-index-upload-url }} 
           password: ${{ secrets.password }}
