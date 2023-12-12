@@ -71,7 +71,7 @@ jobs:
     needs: test
     environment:
       name: ${{ inputs.package-index-name }}
-      url: ${{ inputs.package-index-url }}/${{ inputs.package-name }}
+      url: ${{ inputs.package-index-url }}/project/${{ inputs.package-name }}/
     permissions:
       id-token: write
     steps:
