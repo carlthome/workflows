@@ -111,7 +111,7 @@ jobs:
   publish:
     if: ${{ inputs.package-index-url != '' }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: test
     environment:
       name: ${{ inputs.package-index-name }}
       url: ${{ inputs.package-index-url }}/project/${{ inputs.package-name }}/
