@@ -13,12 +13,71 @@ on:
       package-index-upload-url:
         default: https://upload.pypi.org/legacy/
         type: string
+      build-native-wheels:
+        default: false
+        type: boolean
     secrets:
       password:
         description: PyPI API token
 
 jobs:
   build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+          cache: pip
+
+      - name: Install build tool
+        run: pip install build
+
+      - name: Build ${{ inputs.package-name }}
+        run: python -m build
+
+      - name: Upload ${{ inputs.package-name }} package
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.package-name }}
+          path: ./dist/
+
+  test:
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Download ${{ inputs.package-name }} package
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.package-name }}
+          path: ./dist/
+
+      - name: Install ${{ inputs.package-name }}
+        run: pip install ./dist/*.whl
+
+      - name: Install test runner
+        run: pip install pytest pytest-cov
+
+      - name: Run unit tests
+        run: pytest --cov=${{ inputs.package-name }}
+
+  build-wheels:
+    if: ${{ inputs.build-native-wheels }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
