@@ -24,7 +24,7 @@ jobs:
       - uses: DeterminateSystems/flake-checker-action@v5
       - uses: DeterminateSystems/nix-installer-action@v9
       - uses: DeterminateSystems/magic-nix-cache-action@main
-      - uses: cachix/cachix-action@v13
+      - uses: cachix/cachix-action@v14
         if: ${{ inputs.cachix-cache }}
         with:
           name: ${{ inputs.cachix-cache }}
