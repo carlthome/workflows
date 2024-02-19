@@ -3,7 +3,7 @@ on:
     inputs:
       commit-message:
         type: string
-        default: "Update pre-commit"
+        default: "chore: run pre-commit"
       update:
         type: boolean
         default: false
@@ -20,6 +20,5 @@ jobs:
       run: |
         pre-commit autoupdate --freeze
         pre-commit run --all-files --show-diff-on-failure
-        pre-commit install
-    - run: git commit -a -m ${{ inputs.commit-message }}
-    - run: git push
+        git commit -a -m ${{ inputs.commit-message }}
+        git push
