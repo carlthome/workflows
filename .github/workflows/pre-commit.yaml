@@ -3,7 +3,7 @@ on:
     inputs:
       commit-message:
         type: string
-        default: "chore: run pre-commit"
+        default: "chore: pre-commit"
       update:
         type: boolean
         default: false
@@ -15,10 +15,15 @@ jobs:
     - run: git config --global user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
     - run: git config --global user.name "${GITHUB_ACTOR}"
     - uses: actions/setup-python@v5
-    - uses: pre-commit/action@v3.0.1
+    - id: pre-commit
+      uses: pre-commit/action@v3.0.1
+      continue-on-error: true
     - if: ${{ inputs.update }}
       run: |
+        pre-commit install
         pre-commit autoupdate --freeze
         pre-commit run --all-files --show-diff-on-failure
-        git commit -a -m ${{ inputs.commit-message }}
+        git commit -am ${{ inputs.commit-message }}
         git push
+    - if: ${{ steps.pre-commit.outcome == 'failure' }}
+      run: exit -1
