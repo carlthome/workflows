@@ -7,6 +7,9 @@ on:
       update:
         type: boolean
         default: false
+      push:
+        type: boolean
+        default: false
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
@@ -15,12 +18,24 @@ jobs:
     - run: git config --global user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
     - run: git config --global user.name "${GITHUB_ACTOR}"
     - uses: actions/setup-python@v5
-    - id: pre-commit
-      uses: pre-commit/action@v3.0.1
+      with:
+        cache: pip
+    - run: python -m pip install pre-commit
+    - run: python -m pip freeze --local
+    - uses: actions/cache@v4
+      with:
+        path: ~/.cache/pre-commit
+        save-always: true
+    - if: ${{ inputs.update }}
+      run: pre-commit autoupdate --freeze
+    - run: pre-commit run --all-files --show-diff-on-failure --color=always
       continue-on-error: true
     - run: pre-commit install
-    - if: ${{ inputs.update }}
-      run: pre-commit autoupdate --freeze && pre-commit run -a
-    - run: git commit -am "${{ inputs.commit-message }}" && git push
-    - if: ${{ steps.pre-commit.outcome == 'failure' }}
+    - if: ${{ inputs.push }}
+      run: |
+        if git diff --exit-code; then
+          git commit -am "${{ inputs.commit-message }}"
+          git push
+        fi
+    - if: always()
       run: pre-commit run
