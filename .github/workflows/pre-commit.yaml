@@ -25,6 +25,7 @@ jobs:
     - uses: actions/cache@v4
       with:
         path: ~/.cache/pre-commit
+        key: pre-commit-3|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
         save-always: true
     - if: ${{ inputs.update }}
       run: pre-commit autoupdate --freeze
