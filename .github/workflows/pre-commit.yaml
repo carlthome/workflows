@@ -19,6 +19,7 @@ jobs:
     - run: git config --global user.name "${GITHUB_ACTOR}"
     - uses: actions/setup-python@v5
       with:
+        python-version: '3.x'
         cache: pip
     - run: python -m pip install pre-commit
     - run: python -m pip freeze --local
