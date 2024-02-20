@@ -18,12 +18,9 @@ jobs:
     - id: pre-commit
       uses: pre-commit/action@v3.0.1
       continue-on-error: true
+    - run: pre-commit install
     - if: ${{ inputs.update }}
-      run: |
-        pre-commit install
-        pre-commit autoupdate --freeze
-        pre-commit run --all-files --show-diff-on-failure
-        git commit -am ${{ inputs.commit-message }}
-        git push
+      run: pre-commit autoupdate --freeze && pre-commit run -a
+    - run: git commit -am "${{ inputs.commit-message }}" && git push
     - if: ${{ steps.pre-commit.outcome == 'failure' }}
-      run: exit -1
+      run: pre-commit run
