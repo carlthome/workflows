@@ -37,3 +37,7 @@ jobs:
       - run: nix build --print-build-logs
       - if: ${{ inputs.update }}
         run: git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: result
+          path: result
