@@ -37,8 +37,9 @@ jobs:
       - run: nix build --print-build-logs
       - if: ${{ inputs.update }}
         run: git push
-      - run: echo "storePath=$(readlink result)" >> $GITHUB_ENV
+      - run: echo "path=$(readlink result)" >> $GITHUB_ENV
+      - run: echo "name=$(basename $(readlink result))" >> $GITHUB_ENV
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.storePath }}
-          path: ${{ env.storePath }}
+          name: ${{ env.name }}
+          path: ${{ env.path }}
