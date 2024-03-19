@@ -3,15 +3,23 @@ on:
     inputs:
       cachix-cache:
         type: string
+        description: "Cachix cache"
         default: ""
       runs-on:
         type: string
+        description: "GitHub Actions runner"
         default: ubuntu-22.04
       update:
         type: boolean
+        description: "Update flake inputs and push new flake.lock"
         default: false
+      upload:
+        type: boolean
+        description: "Upload build results to GitHub"
+        default: true
     secrets:
       cachix-token:
+        description: "Cachix token"
         required: false
 
 jobs:
@@ -39,7 +47,8 @@ jobs:
         run: git push
       - run: echo "path=$(readlink result)" >> "$GITHUB_ENV"
       - run: echo "name=hello" >> "$GITHUB_ENV"
-      - uses: actions/upload-artifact@v4
+      - if: ${{ inputs.upload }}
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.name }}
           path: ${{ env.path }}
