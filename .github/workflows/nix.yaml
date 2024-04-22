@@ -1,6 +1,10 @@
 on:
   workflow_call:
     inputs:
+      attribute:
+        type: string
+        description: "Flake output attribute to build"
+        default: "."
       cachix-cache:
         type: string
         description: "Cachix cache"
@@ -42,7 +46,7 @@ jobs:
       - if: ${{ inputs.update }}
         run: nix flake update --commit-lock-file
       - run: nix flake check --keep-going --all-systems
-      - run: nix build --print-build-logs
+      - run: nix build --print-build-logs ${{ inputs.attribute }}
       - if: ${{ inputs.update }}
         run: git push
       - run: echo "path=$(readlink result)" >> "$GITHUB_ENV"
