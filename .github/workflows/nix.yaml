@@ -50,7 +50,7 @@ jobs:
       - if: ${{ inputs.update }}
         run: git push
       - run: echo "path=$(readlink result)" >> "$GITHUB_ENV"
-      - run: echo "name=$(nix eval --json ${{ inputs.attribute }}.name)" >> "$GITHUB_ENV"
+      - run: echo "name=$(nix eval --raw ${{ inputs.attribute }}.name)" >> "$GITHUB_ENV"
       - if: ${{ inputs.upload }}
         uses: actions/upload-artifact@v4
         with:
