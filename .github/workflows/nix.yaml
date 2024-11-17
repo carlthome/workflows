@@ -34,7 +34,7 @@ jobs:
       - run: git config --global user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
       - run: git config --global user.name "${GITHUB_ACTOR}"
       - uses: DeterminateSystems/flake-checker-action@v9
-      - uses: DeterminateSystems/nix-installer-action@v14
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - uses: cachix/cachix-action@v15
         if: ${{ inputs.cachix-cache }}
