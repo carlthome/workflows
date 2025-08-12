@@ -30,7 +30,7 @@ jobs:
   build:
     runs-on: ${{ inputs.runs-on }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: git config --global user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
       - run: git config --global user.name "${GITHUB_ACTOR}"
       - uses: DeterminateSystems/flake-checker-action@v10
