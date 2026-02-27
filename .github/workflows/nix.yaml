@@ -52,7 +52,7 @@ jobs:
       - run: echo "path=$(readlink result)" >> "$GITHUB_ENV"
       - run: echo "name=$(nix eval --raw ${{ inputs.attribute }}.name)" >> "$GITHUB_ENV"
       - if: ${{ inputs.upload }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.name }}
           path: ${{ env.path }}
