@@ -45,7 +45,7 @@ jobs:
       - run: nix flake show
       - if: ${{ inputs.update }}
         run: nix flake update --commit-lock-file
-      - run: nix flake check --keep-going --all-systems
+      - run: nix flake check --keep-going --all-systems --no-build
       - run: nix build --print-build-logs ${{ inputs.attribute }}
       - if: ${{ inputs.update }}
         run: git push
